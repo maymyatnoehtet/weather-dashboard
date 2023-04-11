@@ -1,10 +1,17 @@
+/* to handle the search bar input */
+const form = document.getElementById('search-form');
+const input = document.getElementById('search-input');
+
+form.addEventListener('submit', (event) => {
+    // event.preventDefault();
+    localStorage.setItem("input-city", input.value);
+})
+
 /* all the global variables */
-var city = "London";
+var city = localStorage.getItem("input-city");
+console.log(city);
 const apikey = 'ff6b3036415b6c713a948b9abb79f243';
 var geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apikey}`;
-
-/* variables for renderForecast function */
-const forecastContainer = document.querySelector('.forecast');
 
 /* to get the latitude and longtitude of the city (used GEOCODING API) */
 function getCoords(){
@@ -38,10 +45,18 @@ function getForecast(lat, lon) {
 
 /* to render the weather data retrieved */
 function renderForecast(weatherData){
+
+    /* variables for renderForecast function */
+    const cityHeading = document.querySelector(".city-name");
+    const forecastContainer = document.querySelector('.forecast');
+
     /* to filter the weather data at 12:00 pm */
     const forecastData = weatherData.list.filter(item => item.dt_txt.includes('12:00:00'));
     console.log(forecastData);
-    
+
+    /* to add the selected city name on the weather dashboard */
+    cityHeading.innerHTML = `${city.toUpperCase()}`;
+
     /* loop through 5 leftover weather data lists to render it on html */
     forecastData.forEach(element => {
         console.log(element);
@@ -66,14 +81,14 @@ function renderForecast(weatherData){
 
         /* to add the data into html */
         const forecastItem = document.createElement('div'); // create html element
-            forecastItem.classList.add('forecast-item'); // add class to an html element
-            forecastItem.innerHTML = `
-                <div class="forecast-date">${formatDate}</div>
-                <img class="forecast-icon" src=${iconSrc} alt="${iconDesc}">
-                <div class="forecast-weather">Temperature: ${temperature}°C</div>
-                <div class="forecast-weather">Wind: ${windSpeed}km/h</div>
-                <div class="forecast-weather">Humidity: ${humidityPercent}%</div>
-            `;
-            forecastContainer.appendChild(forecastItem);
+        forecastItem.classList.add('forecast-item'); // add class to an html element
+        forecastItem.innerHTML = `
+            <div class="forecast-date">${formatDate}</div>
+            <img class="forecast-icon" src=${iconSrc} alt="${iconDesc}">
+            <div class="forecast-weather">Temperature: ${temperature}°C</div>
+            <div class="forecast-weather">Wind: ${windSpeed}km/h</div>
+            <div class="forecast-weather">Humidity: ${humidityPercent}%</div>
+        `;
+        forecastContainer.appendChild(forecastItem);
     });
 }

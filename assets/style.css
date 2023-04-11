@@ -23,6 +23,7 @@ body {
 
 /* application name */
 h1 {
+    display: block;
     margin-top: 0;
     font-size: 32px;
     text-align: center;
@@ -74,6 +75,13 @@ background-color: #3e8e41;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.city-name {
+    margin-top: 0;
+    font-size: 28px;
+    text-align: center;
+    color: #ffffff;
 }
 
 .forecast-item {
