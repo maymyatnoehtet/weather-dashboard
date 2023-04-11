@@ -41,6 +41,7 @@ function renderForecast(weatherData){
     /* to filter the weather data at 12:00 pm */
     const forecastData = weatherData.list.filter(item => item.dt_txt.includes('12:00:00'));
     console.log(forecastData);
+    
     /* loop through 5 leftover weather data lists to render it on html */
     forecastData.forEach(element => {
         console.log(element);
