@@ -2,20 +2,21 @@
 const form = document.getElementById('search-form');
 const input = document.getElementById('search-input');
 
+/* event listener for search bar */
 form.addEventListener('submit', (event) => {
-    // event.preventDefault();
     localStorage.setItem("input-city", input.value);
+    fiveRecentCities(input.value);
 })
 
 /* all the global variables */
 var city = localStorage.getItem("input-city");
-console.log(city);
+// console.log(city);
 const apikey = 'ff6b3036415b6c713a948b9abb79f243';
 var geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apikey}`;
 
 /* to get the latitude and longtitude of the city (used GEOCODING API) */
 function getCoords(){
-    console.log("GeoURL: " + geoUrl); // TODO: delete this before submitting
+    // console.log("GeoURL: " + geoUrl); // TODO: delete this before submitting
     fetch(geoUrl)
         .then(response => response.json())
         .then(data => extractLatLon(data))
@@ -24,13 +25,12 @@ function getCoords(){
 
 getCoords(city);
 
-
 /* to extract latitude and longtitude data (used GEOCODING API) */
 function extractLatLon(data){
     var latitude = data[0].lat;
     var longtitude = data[0].lon;
-    console.log("Latitude: "+ latitude);
-    console.log("Longtitude: "+ longtitude);
+    // console.log("Latitude: "+ latitude);
+    // console.log("Longtitude: "+ longtitude);
     getForecast(latitude, longtitude);
 }
 
@@ -45,26 +45,25 @@ function getForecast(lat, lon) {
 
 /* to render the weather data retrieved */
 function renderForecast(weatherData){
-
     /* variables for renderForecast function */
     const cityHeading = document.querySelector(".city-name");
     const forecastContainer = document.querySelector('.forecast');
 
     /* to filter the weather data at 12:00 pm */
     const forecastData = weatherData.list.filter(item => item.dt_txt.includes('12:00:00'));
-    console.log(forecastData);
+    // console.log(forecastData);
 
     /* to add the selected city name on the weather dashboard */
     cityHeading.innerHTML = `${city.toUpperCase()}`;
 
     /* loop through 5 leftover weather data lists to render it on html */
     forecastData.forEach(element => {
-        console.log(element);
+        // console.log(element);
 
         /* date */
         var date = new Date(element.dt_txt);
         var formatDate = date.getDate() + '/' + (date.getMonth()+1) + '/' +  date.getFullYear();;
-        console.log(formatDate);
+        // console.log(formatDate);
 
         /* icon image source */
         iconSrc = "https://openweathermap.org/img/wn/"+ element.weather[0].icon + "@2x.png";
