@@ -2,7 +2,7 @@
 
 The weather dashboard will allow the user to see the weather outlook for multiple cities.
 
-Deployment Link:
+Deployment Link: https://maymyatnoehtet.github.io/weather-dashboard/
 
 Repo Link: https://github.com/maymyatnoehtet/weather-dashboard
 
